@@ -8,6 +8,7 @@ val kotlinLoggingVersion = "1.6.22"
 val javaxValidationVersion = "2.0.1.Final"
 val passayVersion = "1.4.0"
 val apacheBeanUtilsVersion = "1.9.3"
+val apacheCommonsLangVersion = "3.8.1"
 
 plugins {
     kotlin("jvm") version "1.3.21"
@@ -31,6 +32,7 @@ dependencies {
     implementation("javax.validation:validation-api:$javaxValidationVersion")
     implementation("org.passay:passay:$passayVersion")
     implementation("commons-beanutils:commons-beanutils:$apacheBeanUtilsVersion")
+    implementation("org.apache.commons:commons-lang3:$apacheCommonsLangVersion")
     //test dependencies
     testImplementation("org.junit.jupiter:junit-jupiter:5.4.1")
     testImplementation("org.hibernate.validator:hibernate-validator:6.0.16.Final")

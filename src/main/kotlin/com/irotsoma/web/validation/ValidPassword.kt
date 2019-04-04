@@ -28,6 +28,31 @@ import javax.validation.Constraint
 import javax.validation.Payload
 import kotlin.reflect.KClass
 
+/**
+ * A validation annotation to validate passwords
+ *
+ * If no rules parameters are sent, the defaults below are not used. Instead the following rules are used:
+ * Length 8-30 Chars
+ * 1 Uppercase
+ * 1 Lowercase
+ * 1 Numeric
+ * 1 Special
+ * No Whitespaces
+ *
+ * @param message the error message
+ * @param groups array of classes used for grouping annotation classes
+ * @param payload a class that implements Payload to provide metadata
+ * @param messagePropertiesLocation the file location of a message.properties file to use for translating error messages
+ * @param minLength sets the minimum length of the password, default is 1
+ * @param maxLength sets the maximum length of the password, default is Int.MAX_VALUE
+ * @param upperCaseCount sets the minimum number of uppercase characters the password must contain
+ * @param lowerCaseCount sets the minimum number of lowercase characters the password must contain
+ * @param alphaCharsCount sets the minimum number of alphabetic characters the password must contain
+ * @param numericCharsCount sets the minimum number of numeric characters the password must contain
+ * @param specialCharsCount sets the minimum number of special characters the password must contain
+ * @param regex sets a regex to validate the password against
+ * @param whitespaceAllowed sets whether whitespaces are allowed in the password, default is false
+ */
 @Target(AnnotationTarget.FIELD, AnnotationTarget.CLASS)
 @Retention(AnnotationRetention.RUNTIME)
 @MustBeDocumented
@@ -35,5 +60,17 @@ import kotlin.reflect.KClass
 annotation class ValidPassword(
     val message: String = "Invalid Password",
     val groups: Array<KClass<*>> = [],
-    val payload: Array<KClass<out Payload>> = []
+    val payload: Array<KClass<out Payload>> = [],
+    val messagePropertiesLocation: String = "",
+    val minLength: Int = 1,
+    val maxLength: Int = Int.MAX_VALUE,
+    val upperCaseCount: Int = 0,
+    val lowerCaseCount: Int = 0,
+    val alphaCharsCount: Int = 0,
+    val numericCharsCount: Int = 0,
+    val specialCharsCount: Int = 0,
+    val regex: String = "",
+    val whitespaceAllowed: Boolean = true
+
+
 )
