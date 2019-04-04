@@ -16,6 +16,8 @@
  *
  */
 
+/* Based on Java code at https://memorynotfound.com/custom-password-constraint-validator-annotation/ */
+
 /*
  * Created by irotsoma on 4/3/2019.
  */

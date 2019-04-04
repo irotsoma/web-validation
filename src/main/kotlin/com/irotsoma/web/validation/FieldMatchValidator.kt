@@ -16,6 +16,12 @@
  *
  */
 
+/* Based on Java code at https://memorynotfound.com/field-matching-bean-validation-annotation-example/ */
+
+/*
+ * Created by irotsoma on 4/3/2019.
+ */
+
 package com.irotsoma.web.validation
 
 import org.apache.commons.beanutils.BeanUtils
