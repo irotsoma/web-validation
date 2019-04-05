@@ -46,11 +46,13 @@ import javax.validation.ConstraintValidatorContext
  *
  * @property messageResolver A MessageResolver used to translate the default messages from passay into something more readable.
  * @property rules A list of Rules to be used. Blank if no parameters were sent in the annotation.
+ *
  * @author Justin Zak
  */
 class PasswordConstraintValidator : ConstraintValidator<ValidPassword, String> {
     private var messageResolver: MessageResolver? = null
     private val rules: ArrayList<Rule> = arrayListOf()
+    private var messageSeparator = ","
 
     /**
      * Initializes the validator setting up the message resolver and any rules sent in the annotation parameters
@@ -60,6 +62,9 @@ class PasswordConstraintValidator : ConstraintValidator<ValidPassword, String> {
     override fun initialize(constraintAnnotation: ValidPassword) {
         //get a message resolver from either the path sent as a parameter or use the one in the resources folder
         val resourceFile = File(this.javaClass.classLoader.getResource("messages.properties").file)
+        if (constraintAnnotation.messageSeparator.isNotBlank()){
+            messageSeparator = constraintAnnotation.messageSeparator
+        }
         val messageProperties =
             if (constraintAnnotation.messagePropertiesLocation.isNotBlank()){
                 val incomingFile = File(constraintAnnotation.messagePropertiesLocation)
@@ -139,7 +144,7 @@ class PasswordConstraintValidator : ConstraintValidator<ValidPassword, String> {
         }
         val messages = validator.getMessages(result)
         val messageTemplate = messages.stream()
-            .collect(Collectors.joining(","))
+            .collect(Collectors.joining(messageSeparator))
         context.buildConstraintViolationWithTemplate(messageTemplate)
             .addConstraintViolation()
             .disableDefaultConstraintViolation()

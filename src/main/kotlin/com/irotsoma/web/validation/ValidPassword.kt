@@ -40,6 +40,7 @@ import kotlin.reflect.KClass
  * No Whitespaces
  *
  * @param message the error message
+ * @param messageSeparator separator character when multiple error messages are returned
  * @param groups array of classes used for grouping annotation classes
  * @param payload a class that implements Payload to provide metadata
  * @param messagePropertiesLocation the file location of a message.properties file to use for translating error messages
@@ -52,6 +53,8 @@ import kotlin.reflect.KClass
  * @param specialCharsCount sets the minimum number of special characters the password must contain
  * @param regex sets a regex to validate the password against
  * @param whitespaceAllowed sets whether whitespaces are allowed in the password, default is false
+ *
+ * @author Justin Zak
  */
 @Target(AnnotationTarget.FIELD, AnnotationTarget.CLASS)
 @Retention(AnnotationRetention.RUNTIME)
@@ -59,6 +62,7 @@ import kotlin.reflect.KClass
 @Constraint(validatedBy = [PasswordConstraintValidator::class])
 annotation class ValidPassword(
     val message: String = "Invalid Password",
+    val messageSeparator: String = ",",
     val groups: Array<KClass<*>> = [],
     val payload: Array<KClass<out Payload>> = [],
     val messagePropertiesLocation: String = "",

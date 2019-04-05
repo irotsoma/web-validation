@@ -1,8 +1,26 @@
+/*
+ *  Copyright (C) 2019  Irotsoma, LLC
+ *  
+ *  This program is free software: you can redistribute it and/or modify
+ *  it under the terms of the GNU Lesser General Public License as published by
+ *  the Free Software Foundation, either version 3 of the License, or
+ *  (at your option) any later version.
+ *  
+ *  This program is distributed in the hope that it will be useful,
+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *  GNU Lesser General Public License for more details.
+ *  
+ *  You should have received a copy of the GNU Lesser General Public License
+ *  along with this program.  If not, see <http://www.gnu.org/licenses/>
+ *
+ */
+
 import org.jetbrains.dokka.gradle.DokkaTask
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 group = "com.irotsoma.web"
-version = "0.1-SNAPSHOT"
+version = "1.0"
 
 val kotlinLoggingVersion = "1.6.22"
 val javaxValidationVersion = "2.0.1.Final"
@@ -59,14 +77,13 @@ val dokka by tasks.getting(DokkaTask::class) {
     reportUndocumented = true
 }
 
-defaultTasks("dokka")
-
 tasks.register<Jar>("sourcesJar") {
     archiveClassifier.set("sources")
     from(sourceSets.main.get().allSource)
 }
 
 tasks.register<Jar>("javadocJar"){
+    dependsOn("dokka")
     archiveClassifier.set("javadoc")
     from(dokka.outputDirectory)
 }

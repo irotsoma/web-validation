@@ -27,7 +27,17 @@ import javax.validation.Constraint
 import javax.validation.Payload
 import kotlin.reflect.KClass
 
-
+/**
+ * Validation annotation to validate that two fields match
+ *
+ * @param message the error message to be returned if fields do not match
+ * @param groups array of classes used for grouping annotation classes
+ * @param payload a class that implements Payload to provide metadata
+ * @param first holds the field name for the first value for comparison
+ * @param second holds the field name for the the second value for comparison
+ *
+ * @author Justin Zak
+ */
 @Target(AnnotationTarget.TYPE, AnnotationTarget.CLASS)
 @Retention(AnnotationRetention.RUNTIME)
 @Constraint(validatedBy = [FieldMatchValidator::class])
@@ -40,6 +50,18 @@ annotation class FieldMatch(
     val second: String
 ) {
 
+    /**
+     * Allows for grouping multiple validation annotations into a single annotation since only one of each annotation is allowed
+     * Note: items in the array should not have the @ sign
+     *
+     * Example: Add this annotation to the class to validate both password and email are the same as their confirm fields
+     * * @FieldMatch.List([
+     * *    FieldMatch(first = "password", second = "confirmPassword", message = "The password fields must match"),
+     * *    FieldMatch(first = "email", second = "confirmEmail", message = "The email fields must match")
+     * * ])
+     *
+     * @param value A list of FieldMatch instances to be validated
+     */
     @Target(AnnotationTarget.TYPE, AnnotationTarget.CLASS)
     @Retention(AnnotationRetention.RUNTIME)
     @MustBeDocumented

@@ -28,19 +28,39 @@ import org.apache.commons.beanutils.BeanUtils
 import javax.validation.ConstraintValidator
 import javax.validation.ConstraintValidatorContext
 
-
+/**
+ * Constraint Validator for the Field match annotation
+ *
+ * @property firstFieldName Holds the name of the first field to be compared
+ * @property secondFieldName Holds the name of the first field to be compared
+ * @property message Holds the error message to use if validation fails
+ *
+ * @author Justin Zak
+ */
 class FieldMatchValidator : ConstraintValidator<FieldMatch, Any> {
 
     private var firstFieldName: String? = null
     private var secondFieldName: String? = null
     private var message: String? = null
 
+    /**
+     * Initializes the validator pulling values from the FieldMatch annotation parameters
+     *
+     * @param constraintAnnotation the instance of the annotation in context
+     */
     override fun initialize(constraintAnnotation: FieldMatch) {
         firstFieldName = constraintAnnotation.first
         secondFieldName = constraintAnnotation.second
         message = constraintAnnotation.message
     }
 
+    /**
+     * Builds the validator and runs the validate function. Errors are added to the context.
+     *
+     * @param value value to be validated
+     * @param context context in which the constraint is evaluated
+     * @return true if all validations passed otherwise false
+     */
     override fun isValid(value: Any, context: ConstraintValidatorContext): Boolean {
         var valid = true
         try {
