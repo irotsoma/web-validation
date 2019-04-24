@@ -1,5 +1,8 @@
 # web-validation
 
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/6a6454e557684ea0b694ff93a449c47b)](https://www.codacy.com/app/irotsoma/web-validation?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=irotsoma/web-validation&amp;utm_campaign=Badge_Grade)
+[![Build Status](https://travis-ci.org/irotsoma/web-validation.svg?branch=master)](https://travis-ci.org/irotsoma/web-validation)
+
 A JVM library written in Kotlin that adds some custom bean anotations for validating input using a bean validator like hybernate validator.
 
 The current implementation introduces a @ValidPassword annotation to be used on bean fields and a @FieldMatch annotation for validating that 2 fields match each other.
