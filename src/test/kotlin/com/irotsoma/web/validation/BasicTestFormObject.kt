@@ -24,11 +24,17 @@ package com.irotsoma.web.validation
 import javax.validation.constraints.Email
 import javax.validation.constraints.NotEmpty
 
+/**
+ * A class representing a web form object with password and email fields and confirmation fields for both.
+ * Password validation uses default logic.
+ *
+ * @author Justin Zak
+ */
 @FieldMatch.List([
     FieldMatch(first = "password", second = "confirmPassword", message = "The password fields must match"),
     FieldMatch(first = "email", second = "confirmEmail", message = "The email fields must match")
 ])
-class TestFormObject {
+class BasicTestFormObject {
     @NotEmpty
     @ValidPassword
     var password: String? = null

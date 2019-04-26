@@ -20,7 +20,7 @@ import org.jetbrains.dokka.gradle.DokkaTask
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 group = "com.irotsoma.web"
-version = "1.0"
+version = "1.1"
 
 val kotlinLoggingVersion = "1.6.22"
 val javaxValidationVersion = "2.0.1.Final"
@@ -29,8 +29,11 @@ val apacheBeanUtilsVersion = "1.9.3"
 val apacheCommonsLangVersion = "3.8.1"
 
 plugins {
-    kotlin("jvm") version "1.3.21"
-    id("org.jetbrains.dokka") version "0.9.18"
+    val kotlinVersion = "1.3.30"
+    val dokkaVersion = "0.9.18"
+    
+    kotlin("jvm") version kotlinVersion
+    id("org.jetbrains.dokka") version dokkaVersion
     signing
     `maven-publish`
 }

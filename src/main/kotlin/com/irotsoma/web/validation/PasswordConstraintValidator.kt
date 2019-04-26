@@ -46,6 +46,8 @@ import javax.validation.ConstraintValidatorContext
  *
  * @property messageResolver A MessageResolver used to translate the default messages from passay into something more readable.
  * @property rules A list of Rules to be used. Blank if no parameters were sent in the annotation.
+ * @property messageSeparator The separator string to be used between each message for a given validation error
+ * @property messageProperties A Properties object containing the currently valid message.properties. Getter is public, but setter is private.
  *
  * @author Justin Zak
  */
@@ -53,6 +55,9 @@ class PasswordConstraintValidator : ConstraintValidator<ValidPassword, String> {
     private var messageResolver: MessageResolver? = null
     private val rules: ArrayList<Rule> = arrayListOf()
     private var messageSeparator = ","
+
+    var messageProperties: Properties? = null
+        private set
 
     /**
      * Initializes the validator setting up the message resolver and any rules sent in the annotation parameters
@@ -62,7 +67,7 @@ class PasswordConstraintValidator : ConstraintValidator<ValidPassword, String> {
     override fun initialize(constraintAnnotation: ValidPassword) {
         //get a message resolver from either the path sent as a parameter or use the one in the resources folder
         val resourceFile = File(this.javaClass.classLoader.getResource("messages.properties").file)
-        if (constraintAnnotation.messageSeparator.isNotBlank()){
+        if (constraintAnnotation.messageSeparator.isNotEmpty()){
             messageSeparator = constraintAnnotation.messageSeparator
         }
         val messageProperties =
@@ -76,9 +81,9 @@ class PasswordConstraintValidator : ConstraintValidator<ValidPassword, String> {
                 resourceFile
             }
         if (messageProperties.exists()) {
-            val props = Properties()
-            props.load(messageProperties.inputStream())
-            messageResolver = PropertiesMessageResolver(props)
+            this.messageProperties = Properties()
+            this.messageProperties!!.load(messageProperties.inputStream())
+            messageResolver = PropertiesMessageResolver(this.messageProperties)
         }
         // get all settings for selected rules
         if (constraintAnnotation.minLength > 1 || constraintAnnotation.maxLength < Int.MAX_VALUE) {
