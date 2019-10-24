@@ -20,7 +20,7 @@ import org.jetbrains.dokka.gradle.DokkaTask
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 group = "com.irotsoma.web"
-version = "1.1"
+version = "1.2-SNAPSHOT"
 
 val kotlinLoggingVersion = "1.6.22"
 val javaxValidationVersion = "2.0.1.Final"

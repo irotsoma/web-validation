@@ -54,7 +54,7 @@ import javax.validation.ConstraintValidatorContext
 class PasswordConstraintValidator : ConstraintValidator<ValidPassword, String> {
     private var messageResolver: MessageResolver? = null
     private val rules: ArrayList<Rule> = arrayListOf()
-    private var messageSeparator = ","
+    private var messageSeparator = "\u001E"
 
     var messageProperties: Properties? = null
         private set

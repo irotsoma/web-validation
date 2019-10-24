@@ -62,7 +62,7 @@ import kotlin.reflect.KClass
 @Constraint(validatedBy = [PasswordConstraintValidator::class])
 annotation class ValidPassword(
     val message: String = "Invalid Password",
-    val messageSeparator: String = ",",
+    val messageSeparator: String = "\u001E",
     val groups: Array<KClass<*>> = [],
     val payload: Array<KClass<out Payload>> = [],
     val messagePropertiesLocation: String = "",
