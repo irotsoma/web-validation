@@ -20,13 +20,14 @@ import org.jetbrains.dokka.gradle.DokkaTask
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 group = "com.irotsoma.web"
-version = "1.2"
+version = "1.3"
 
 val kotlinLoggingVersion = "1.6.22"
 val javaxValidationVersion = "2.0.1.Final"
 val passayVersion = "1.4.0"
 val apacheBeanUtilsVersion = "1.9.3"
 val apacheCommonsLangVersion = "3.8.1"
+val hibernateValidatorVersion = "6.1.5.Final"
 
 plugins {
     val kotlinVersion = "1.3.30"
@@ -54,9 +55,9 @@ dependencies {
     implementation("org.passay:passay:$passayVersion")
     implementation("commons-beanutils:commons-beanutils:$apacheBeanUtilsVersion")
     implementation("org.apache.commons:commons-lang3:$apacheCommonsLangVersion")
+    implementation("org.hibernate.validator:hibernate-validator:$hibernateValidatorVersion")
     //test dependencies
     testImplementation("org.junit.jupiter:junit-jupiter:5.4.1")
-    testImplementation("org.hibernate.validator:hibernate-validator:6.0.16.Final")
     testImplementation("org.glassfish:javax.el:3.0.1-b09")
 }
 

@@ -30,7 +30,7 @@ import javax.validation.Validation
  *
  * @author Justin Zak
  */
-class PasswordConstraintValidatorTest {
+class ConstraintValidatorTests {
     /**
      * Tests the password format using default password format options, email match, and password match
      *
@@ -104,4 +104,32 @@ class PasswordConstraintValidatorTest {
         }
     }
     //TODO: Add more tests for PasswordTestFormObject
+    /**
+     * Tests that the OneNotBlank annotation will trigger violations on all objects when none are populated
+     */
+    @Test
+    fun testOneNotBlankInvalid() {
+        val factory = Validation.buildDefaultValidatorFactory()
+        val validator = factory.validator
+        var form = OneNotBlankFormObject()
+        var constraintViolations = validator.validate(form)
+        assertEquals(constraintViolations.size, 3)
+        form = OneNotBlankFormObject()
+        form.firstNonBlank = ""
+        constraintViolations = validator.validate(form)
+        assertEquals(constraintViolations.size, 3)
+    }
+    /**
+     * Tests that the OneNotBlank annotation will not trigger violations when one is populated
+     */
+    @Test
+    fun testOneNotBlankValid() {
+        val factory = Validation.buildDefaultValidatorFactory()
+        val validator = factory.validator
+        val form = OneNotBlankFormObject()
+        form.secondNonBlank = "test value"
+        val constraintViolations = validator.validate(form)
+        assertEquals(constraintViolations.size, 0)
+    }
+
 }

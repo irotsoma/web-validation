@@ -31,26 +31,23 @@ import javax.validation.ConstraintValidatorContext
 /**
  * Constraint Validator for the Field match annotation
  *
- * @property firstFieldName Holds the name of the first field to be compared
- * @property secondFieldName Holds the name of the first field to be compared
+ * @property fieldNames Holds an array of the field names to be compared
  * @property message Holds the error message to use if validation fails
  *
  * @author Justin Zak
  */
-class FieldMatchValidator : ConstraintValidator<FieldMatch, Any> {
+class OneNotBlankValidator : ConstraintValidator<OneNotBlank, Any> {
 
-    private var firstFieldName: String? = null
-    private var secondFieldName: String? = null
+    private var fieldNames: Array<String> = emptyArray()
     private var message: String? = null
 
     /**
-     * Initializes the validator pulling values from the FieldMatch annotation parameters
+     * Initializes the validator pulling values from the OneNotBlank annotation parameters
      *
      * @param constraintAnnotation the instance of the annotation in context
      */
-    override fun initialize(constraintAnnotation: FieldMatch) {
-        firstFieldName = constraintAnnotation.first
-        secondFieldName = constraintAnnotation.second
+    override fun initialize(constraintAnnotation: OneNotBlank) {
+        fieldNames = constraintAnnotation.fields
         message = constraintAnnotation.message
     }
 
@@ -62,23 +59,25 @@ class FieldMatchValidator : ConstraintValidator<FieldMatch, Any> {
      * @return true if all validations passed otherwise false
      */
     override fun isValid(value: Any, context: ConstraintValidatorContext): Boolean {
-        var valid = true
+        var valid = false
         try {
-            val firstObj = BeanUtils.getProperty(value, firstFieldName)
-            val secondObj = BeanUtils.getProperty(value, secondFieldName)
-
-            valid = firstObj == null && secondObj == null || firstObj != null && firstObj == secondObj
+            for (fieldName in fieldNames) {
+                if (BeanUtils.getProperty(value, fieldName)?.isNotBlank() == true){
+                    valid = true
+                }
+            }
         } catch (ignore: Exception) {
             // ignore
         }
 
         if (!valid) {
-            context.buildConstraintViolationWithTemplate(message)
-                .addPropertyNode(firstFieldName)
-                .addConstraintViolation()
-                .disableDefaultConstraintViolation()
+            for (fieldName in fieldNames) {
+                context.buildConstraintViolationWithTemplate(message)
+                    .addPropertyNode(fieldName)
+                    .addConstraintViolation()
+                    .disableDefaultConstraintViolation()
+            }
         }
-
         return valid
     }
     //TODO: internationalization of messages
